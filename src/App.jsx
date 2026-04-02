@@ -11,6 +11,7 @@ import Settings from './pages/Settings/Settings'
 import Profile from './pages/Profile/Profile'
 import Devices from './pages/Devices/Devices'
 import OtpVerify from './pages/OtpVerify/OtpVerify'
+import { InstallAppNotice } from './components/organisms'
 
 // Protected Route Component
 function ProtectedRoute({ children }) {
@@ -107,6 +108,7 @@ function App() {
         {/* Catch all - redirect to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <InstallAppNotice />
     </BrowserRouter>
   )
 }

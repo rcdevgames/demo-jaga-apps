@@ -56,6 +56,10 @@
 
 ### 🔐 Authentication
 - **3 Metode Login**: Email, WhatsApp, Nomor Telepon
+- **Halaman OTP Terpisah**: Verifikasi OTP di halaman khusus (`/login/otp`)
+- **OTP Box 6 Digit**: Input OTP model kotak per digit dengan auto-focus
+- **Mock OTP**: Gunakan kode `123456` untuk flow WhatsApp/Telepon
+- **Mock Resend OTP**: Fitur kirim ulang OTP dengan countdown
 - **Validasi Real-time**: Format validation saat mengetik
 - **Shake Animation**: Feedback visual saat error
 - **Demo Mode**: Bypass login untuk testing
@@ -88,11 +92,16 @@
 - **Summary Cards**: Quick overview per severity
 
 ### ⚙️ Settings
-- **Profile Management**: User info dan connected devices
+- **Profile Page**: Halaman profil terpisah dari menu Pengaturan
+- **Connected Devices Page**: Halaman perangkat terhubung terpisah dari menu Pengaturan
 - **Notification Toggles**: Push, Motion, Offline, Battery alerts
 - **System Settings**: Dark Mode, Auto Arm, Cloud Backup
-- **Language**: Bahasa Indonesia/English
 - **Danger Zone**: Logout functionality
+
+### 📲 Native App Install Notice
+- **Install Button**: Tampil jika dibuka dari Google Chrome versi terbaru dan browser siap install PWA
+- **Smart Suggestion**: Jika bukan Chrome terbaru, muncul saran ringan (non-intrusive)
+- **Dismissable Banner**: Notice bisa ditutup agar tidak mengganggu
 
 ---
 
@@ -122,9 +131,9 @@ Komponen dibagi menjadi hierarki yang jelas:
 ```
 ├── Atoms       → Button, Input, Badge, Spinner
 ├── Molecules   → FormField, CameraCard, StatItem, Toggle
-├── Organisms   → Navbar, CameraGrid, AlertList, ActivityChart
+├── Organisms   → Navbar, CameraGrid, AlertList, ActivityChart, InstallAppNotice
 ├── Templates   → MainLayout, AuthLayout
-└── Pages       → Login, Dashboard, Cameras, Alerts, Settings
+└── Pages       → Login, OtpVerify, Dashboard, Cameras, Alerts, Settings, Profile, Devices
 ```
 
 #### 2. Strategy Pattern (Authentication)
@@ -255,16 +264,20 @@ mobile-jaga/
 │   │   │   ├── Navbar.jsx
 │   │   │   ├── CameraGrid.jsx
 │   │   │   ├── AlertList.jsx
-│   │   │   └── ActivityChart.jsx
+│   │   │   ├── ActivityChart.jsx
+│   │   │   └── InstallAppNotice.jsx
 │   │   └── templates/       # Layout templates
 │   │       └── Layout.jsx
 │   ├── hooks/               # Custom React hooks
 │   ├── pages/               # Page components
 │   │   ├── Login/
+│   │   ├── OtpVerify/
 │   │   ├── Dashboard/
 │   │   ├── Cameras/
 │   │   ├── Alerts/
-│   │   └── Settings/
+│   │   ├── Settings/
+│   │   ├── Profile/
+│   │   └── Devices/
 │   ├── store/               # Zustand stores
 │   │   ├── authStore.js
 │   │   ├── cctvStore.js
@@ -463,6 +476,11 @@ VitePWA({
 3. Atau melalui menu browser: **Add to Home Screen**
 4. App akan muncul di homescreen seperti native app
 
+### Install Notice Behavior
+- Jika user membuka app di Google Chrome versi terbaru dan event install tersedia, tombol **Install App** akan muncul.
+- Jika user membuka app di browser lain atau Chrome versi lama, app menampilkan saran halus untuk memakai Chrome terbaru.
+- Notice bersifat non-intrusive dan bisa di-dismiss oleh user.
+
 ### Offline Support
 - Service Worker caching semua assets
 - App tetap bisa dibuka tanpa internet
@@ -624,6 +642,7 @@ pnpm run build
 - Check manifest.json is valid
 - Verify service worker is registered
 - Clear browser cache
+- Use Google Chrome versi terbaru untuk kompatibilitas install prompt terbaik
 
 #### 3. State Not Persisting
 ```javascript
