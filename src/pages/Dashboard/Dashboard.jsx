@@ -7,6 +7,7 @@ import { Badge } from '../../components/atoms/Badge'
 import { useCCTVStore } from '../../store/cctvStore'
 import { useAuthStore } from '../../store/authStore'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 export default function Dashboard() {
   const navigate = useNavigate()

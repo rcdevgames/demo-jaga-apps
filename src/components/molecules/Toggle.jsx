@@ -13,13 +13,12 @@ export function Toggle({
   className
 }) {
   return (
-    <motion.div
+    <div
       className={cn(
         'flex items-center justify-between py-3',
         disabled && 'opacity-50',
         className
       )}
-      whileTap={disabled ? {} : { scale: 0.98 }}
     >
       <div className="flex-1">
         {label && (
@@ -48,7 +47,7 @@ export function Toggle({
           )}
         />
       </button>
-    </motion.div>
+    </div>
   )
 }
 

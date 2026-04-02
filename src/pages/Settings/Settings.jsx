@@ -1,11 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   User,
   Bell,
   Shield,
   Wifi,
   Moon,
-  Globe,
   Database,
   LogOut,
   ChevronRight,
@@ -21,6 +21,7 @@ import { useAuthStore } from '../../store/authStore'
 import { cn } from '../../api/utils'
 
 export default function Settings() {
+  const navigate = useNavigate()
   const { user, logout } = useAuthStore()
   
   const [notifications, setNotifications] = useState({
@@ -44,13 +45,13 @@ export default function Settings() {
           icon: User,
           label: 'Profil',
           value: user?.email,
-          onClick: () => {}
+          onClick: () => navigate('/settings/profile')
         },
         {
           icon: Smartphone,
           label: 'Perangkat Terhubung',
           value: '2 perangkat',
-          onClick: () => {}
+          onClick: () => navigate('/settings/devices')
         }
       ]
     },
@@ -111,12 +112,6 @@ export default function Settings() {
           toggle: true,
           value: system.cloudBackup,
           onChange: (v) => setSystem({ ...system, cloudBackup: v })
-        },
-        {
-          icon: Globe,
-          label: 'Bahasa',
-          value: 'Indonesia',
-          onClick: () => {}
         }
       ]
     }

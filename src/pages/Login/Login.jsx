@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { Mail, Lock, Shield, Smartphone, MessageCircle } from 'lucide-react'
 import { AuthLayout } from '../../components/templates/Layout'

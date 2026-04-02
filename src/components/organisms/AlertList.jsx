@@ -1,4 +1,4 @@
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { X, ChevronRight, AlertTriangle, AlertCircle, Info } from 'lucide-react'
 import { Badge } from '../atoms/Badge'
 import { Button } from '../atoms/Button'

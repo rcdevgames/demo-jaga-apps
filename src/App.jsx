@@ -8,6 +8,8 @@ import Cameras from './pages/Cameras/Cameras'
 import CameraDetail from './pages/Cameras/CameraDetail'
 import Alerts from './pages/Alerts/Alerts'
 import Settings from './pages/Settings/Settings'
+import Profile from './pages/Profile/Profile'
+import Devices from './pages/Devices/Devices'
 
 // Protected Route Component
 function ProtectedRoute({ children }) {
@@ -73,6 +75,22 @@ function App() {
           element={
             <ProtectedRoute>
               <Settings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings/devices"
+          element={
+            <ProtectedRoute>
+              <Devices />
             </ProtectedRoute>
           }
         />

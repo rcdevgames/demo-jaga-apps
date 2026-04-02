@@ -20,7 +20,7 @@ import {
   Eye,
   Thermometer
 } from 'lucide-react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { MainLayout } from '../../components/templates/Layout'
 import { Header } from '../../components/organisms/Navbar'
 import { TabBar } from '../../components/molecules/TabBar'
