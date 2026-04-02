@@ -8,6 +8,7 @@ export const useAuthStore = create(
       isAuthenticated: false,
       isLoading: false,
       error: null,
+      pendingOtp: null,
 
       login: async (credentials) => {
         set({ isLoading: true, error: null })
@@ -53,8 +54,72 @@ export const useAuthStore = create(
         }
       },
 
+      requestOtp: async ({ phone, method = 'phone' }) => {
+        set({ isLoading: true, error: null })
+        try {
+          await new Promise(resolve => setTimeout(resolve, 800))
+
+          if (!phone) {
+            throw new Error('Nomor wajib diisi')
+          }
+
+          set({
+            pendingOtp: {
+              phone,
+              method,
+              sentAt: Date.now()
+            },
+            isLoading: false
+          })
+
+          return { success: true }
+        } catch (error) {
+          set({ error: error.message, isLoading: false })
+          return { success: false, error: error.message }
+        }
+      },
+
+      verifyOtp: async ({ phone, otp }) => {
+        set({ isLoading: true, error: null })
+        try {
+          await new Promise(resolve => setTimeout(resolve, 700))
+
+          if (!phone) {
+            throw new Error('Nomor wajib diisi')
+          }
+
+          if (!otp) {
+            throw new Error('Kode OTP wajib diisi')
+          }
+
+          if (otp !== '123456') {
+            throw new Error('Kode OTP tidak valid. Gunakan 123456 untuk mode mock')
+          }
+
+          const normalizedPhone = phone.replace(/\s+/g, '')
+
+          set({
+            user: {
+              id: '1',
+              email: null,
+              phone: normalizedPhone,
+              name: `User ${normalizedPhone.slice(-4)}`,
+              avatar: null
+            },
+            pendingOtp: null,
+            isAuthenticated: true,
+            isLoading: false
+          })
+
+          return { success: true }
+        } catch (error) {
+          set({ error: error.message, isLoading: false })
+          return { success: false, error: error.message }
+        }
+      },
+
       logout: () => {
-        set({ user: null, isAuthenticated: false, error: null })
+        set({ user: null, pendingOtp: null, isAuthenticated: false, error: null })
       },
 
       clearError: () => {

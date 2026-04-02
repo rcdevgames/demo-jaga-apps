@@ -5,7 +5,6 @@ import { Mail, Lock, Shield, Smartphone, MessageCircle } from 'lucide-react'
 import { AuthLayout } from '../../components/templates/Layout'
 import { Button } from '../../components/atoms/Button'
 import { FormField } from '../../components/molecules/FormField'
-import { Badge } from '../../components/atoms/Badge'
 import { useAuthStore } from '../../store/authStore'
 import { validators } from '../../api/authService'
 import { cn } from '../../api/utils'
@@ -25,7 +24,7 @@ const loginMethods = [
 
 export default function Login() {
   const navigate = useNavigate()
-  const { login, isLoading, error, clearError } = useAuthStore()
+  const { login, requestOtp, isLoading, error, clearError } = useAuthStore()
   
   const [method, setMethod] = useState('email')
   const [formData, setFormData] = useState({
@@ -75,16 +74,20 @@ export default function Login() {
       ? { email: formData.email, password: formData.password }
       : { phone: formData.phone }
 
-    const result = await login(credentials)
+    const result = method === 'email'
+      ? await login(credentials)
+      : await requestOtp({ phone: formData.phone, method })
 
     if (result.success) {
-      navigate('/')
+      if (method === 'email') {
+        navigate('/')
+      } else {
+        navigate('/login/otp')
+      }
     } else {
       setHasError(true)
     }
   }
-
-  const CurrentIcon = loginMethods.find(m => m.id === method)?.icon || Mail
 
   return (
     <AuthLayout>

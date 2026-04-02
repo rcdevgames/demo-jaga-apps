@@ -10,6 +10,7 @@ import Alerts from './pages/Alerts/Alerts'
 import Settings from './pages/Settings/Settings'
 import Profile from './pages/Profile/Profile'
 import Devices from './pages/Devices/Devices'
+import OtpVerify from './pages/OtpVerify/OtpVerify'
 
 // Protected Route Component
 function ProtectedRoute({ children }) {
@@ -33,6 +34,14 @@ function App() {
           element={
             <PublicRoute>
               <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/login/otp"
+          element={
+            <PublicRoute>
+              <OtpVerify />
             </PublicRoute>
           }
         />
